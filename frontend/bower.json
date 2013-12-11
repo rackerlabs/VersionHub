@@ -1,0 +1,16 @@
+{
+  "name": "frontend",
+  "version": "0.0.1",
+  "dependencies": {
+    "angular": "~1.2.5",
+    "angular-route": "~1.2.5",
+    "angular-resource": "~1.2.5",
+    "angular-cookies": "~1.2.5",
+    "angular-sanitize": "~1.2.5",
+    "lodash": "~2.2.1"
+  },
+  "devDependencies": {
+    "angular-mocks": "~1.2.5",
+    "angular-scenario": "~1.2.5"
+  }
+}

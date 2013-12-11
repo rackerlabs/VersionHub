@@ -1,0 +1,21 @@
+# generic
+*.py[co]
+*.sw*
+*.db
+
+# config files
+/ops/config.yaml
+
+# virtualenv
+/.Python
+/bin
+/bootstrap.py
+/*.egg-info
+/tornado*
+/include
+/lib
+/build
+/dist
+
+# testing environment
+proxy.py

@@ -1,4 +1,5 @@
 import psycopg2
+import psycopg2.extras
 
 class Db:
     __conn = None
@@ -12,11 +13,9 @@ class Db:
     @staticmethod
     def connect():
         if Db.__conn is None:
-            #Db.__conn = psycopg2.connect(Db.dsn())
-            print(Db.__settings)
             Db.__conn = psycopg2.connect(**Db.__settings)
 
-        return Db.__conn.cursor()
+        return Db.__conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
 
     @staticmethod
     def dsn():

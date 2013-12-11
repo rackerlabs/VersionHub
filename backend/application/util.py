@@ -15,8 +15,8 @@ import tornado.web
 from tornado.ioloop import IOLoop
 from tornado.web import RequestHandler
 
-from application.config import config
-from application.lib.mock import set_mock_data
+#from application.config import config
+#from application.lib.mock import set_mock_data
 
 log = logging.getLogger(__name__)
 
@@ -108,6 +108,6 @@ def main(handler_path):
 
     # start the ioloop
     log.info("Starting the application on port 8000")
-    application.listen(8000, 'localhost')
+    application.listen(8000, '0.0.0.0')
     IOLoop.instance().start()
 

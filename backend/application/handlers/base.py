@@ -8,9 +8,9 @@ from tornado import gen
 from tornado.web import HTTPError
 from tornado.web import RequestHandler
 
-from application.services.auth import Auth
-from application.services.base import BaseService
-from application.config import config
+#from application.services.auth import Auth
+#from application.services.base import BaseService
+#from application.config import config
 
 log = logging.getLogger(__name__)
 

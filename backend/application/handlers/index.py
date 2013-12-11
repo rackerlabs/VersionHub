@@ -1,3 +1,4 @@
+from application.db.db import Db
 from application.util import route
 from application.handlers.base import BaseHandler
 
@@ -5,5 +6,11 @@ from application.handlers.base import BaseHandler
 class ApplicationHandler(BaseHandler):
 
     def get(self):
-       pass 
+        db = Db.connect()
+        db.callproc('get_all_applications');
+
+        r = db.fetchall()
+        print(r)
+
+        self.finish(r)
 

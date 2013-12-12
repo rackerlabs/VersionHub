@@ -253,13 +253,6 @@ RETURNS setof applications AS
 	$$
 LANGUAGE sql;
 
-CREATE OR REPLACE FUNCTION get_application(int)
-RETURNS setof applications AS
-	$$ 
-		SELECT * FROM applications WHERE id = $1;
-	$$
-LANGUAGE sql;
-
 CREATE OR REPLACE FUNCTION create_application(name_text varchar(1024), description_text text, github_text varchar(512), contact_email_text varchar(512))
 RETURNS int AS
 	$$ 

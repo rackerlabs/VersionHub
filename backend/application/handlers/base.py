@@ -8,6 +8,8 @@ from tornado import gen
 from tornado.web import HTTPError
 from tornado.web import RequestHandler
 
+from application.db.db import Db
+
 #from application.services.auth import Auth
 #from application.services.base import BaseService
 #from application.config import config
@@ -102,6 +104,12 @@ class BaseHandler(RequestHandler):
             raise HTTPError(415, "Unsupported Media Type")
 
         return {}
+
+    def finish(self, response):
+        """ Make sure we close the database """
+        Db.close()
+
+        super(BaseHandler, self).finish(response)
 
     def write(self, chunk):
         """ Make sure we only write json and ensure content-type is correct """

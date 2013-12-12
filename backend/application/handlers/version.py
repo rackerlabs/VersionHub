@@ -28,7 +28,13 @@ class VersionHandler(BaseHandler):
     
     @asynchronous
     @gen.engine
-    def delete(app_id, env_id, self):
+    def get(app_id, env_id, version_id, self):
+        response = yield gen.Task(Version.get_dependency_version_log, version_id)
+        self.finish(response)
+
+    @asynchronous
+    @gen.engine
+    def delete(app_id, env_id, version_id, self):
         version = self.params.get("version", "")
 
         response = yield gen.Task(Version.delete_version, version_id)
@@ -44,6 +50,14 @@ class Version(object):
 
         r = db.fetchall()
         return callback({'versions': r})
+
+    @staticmethod
+    def get_detailed_version_log(version_id, callback):
+        db = Db.connect()
+        db.callproc('get_dependency_version_log', version_id);
+
+        r = db.fetchall()
+        return callback({'dependency_versions': r})
 
     @staticmethod
     def create_version(env_id, version, callback):

@@ -384,10 +384,10 @@ RETURNS setof environment_version_log AS
 LANGUAGE sql;
 
 
-CREATE OR REPLACE FUNCTION get_detailed_version_log(int)
+CREATE OR REPLACE FUNCTION get_dependency_version_log(int)
 RETURNS setof version_logs AS
 	$$ 
-		SELECT * FROM version_logs WHERE id = $1;
+		SELECT * FROM version_logs WHERE version = $1;
 	$$
 LANGUAGE sql;
 

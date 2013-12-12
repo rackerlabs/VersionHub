@@ -185,25 +185,25 @@ CREATE OR REPLACE VIEW environment_dependencies AS
 
 
 CREATE OR REPLACE VIEW environment_notifications AS
-	SELECT 
-		n.message 		as notification_message,
-		n.date_created 	as created_on,
-		e.id 			as environment_id
-	FROM
-		notifications n 
-	JOIN 
-		environments e ON e.id = n.environment;
+SELECT a.id as application_id, a.name as application_name, n.message AS notification_message, n.date_created AS created_on, e.id AS environment_id, et.label as environment_type
+   FROM notifications n
+   JOIN environments e ON e.id = n.environment
+   JOIN environment_types et ON e.environment_type = et.id
+   JOIN applications a ON e.application = a.id;
 
 
 CREATE OR REPLACE VIEW environment_version_log AS
-	SELECT
-	 	v.id 		as version_id,
-	 	v.version 	as version_text,
-	 	e.id 		as environment_id
-	FROM 
-		versions v
-	JOIN environments e ON e.id = v.environment
-	ORDER BY v.date_created DESC;
+        SELECT
+                v.id            as version_id,
+                v.version       as version_text,
+                a.id            as application_id,
+                a.name          as application_name,
+                e.id            as environment_id
+        FROM
+                versions v
+        JOIN environments e ON e.id = v.environment
+        JOIN applications a ON e.application = a.id
+        ORDER BY v.date_created DESC;
 
 
 CREATE OR REPLACE VIEW get_applications AS
@@ -396,14 +396,14 @@ LANGUAGE sql;
 CREATE OR REPLACE FUNCTION get_environment_noifications(int)
 RETURNS setof environment_notifications AS
 	$$ 
-		SELECT * FROM environment_notifications WHERE environment_id = $1 AND read = FALSE;
+		SELECT * FROM environment_notifications WHERE application_id = $1 AND read = FALSE;
 	$$
 LANGUAGE sql;
 
 CREATE OR REPLACE FUNCTION get_environment_version_log(int)
 RETURNS setof environment_version_log AS
 	$$ 
-		SELECT * FROM environment_version_log WHERE environment_id = $1;
+		SELECT * FROM environment_version_log WHERE application_id = $1;
 	$$
 LANGUAGE sql;
 

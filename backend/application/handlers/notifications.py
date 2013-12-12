@@ -1,3 +1,5 @@
+import datetime
+
 from tornado import gen
 from tornado.web import asynchronous
 
@@ -5,7 +7,7 @@ from application.db.db import Db
 from application.util import route
 from application.handlers.base import BaseHandler
 
-@route(r'/applications/{app_id}/enviornments/{env_id}/notifications')
+@route(r'/applications/{app_id}/environments/{env_id}/notifications')
 class NotificationsHandler(BaseHandler):
 
     @asynchronous
@@ -15,7 +17,7 @@ class NotificationsHandler(BaseHandler):
         self.finish(response)
 
 
-@route(r'/applications/{app_id}/enviornments/{env_id}/notifications/{notification_id}')
+@route(r'/applications/{app_id}/environments/{env_id}/notifications/{notification_id}')
 class NotificationHandler(BaseHandler):
     
     @asynchronous
@@ -28,11 +30,14 @@ class NotificationHandler(BaseHandler):
 class Notification(object):
 
     @staticmethod
-    def get_notification(env_id, callback):
+    def get_notifications(env_id, callback):
         db = Db.connect()
         db.callproc('get_environment_noifications', env_id);
 
         r = db.fetchall()
+        for l in r:
+            for k, v in l.items():
+                l[k] = v.isoformat() if isinstance(v, datetime.datetime) or isinstance(v, datetime.date) else v
         return callback({'notifications': r})
 
     @staticmethod

@@ -52,7 +52,7 @@ CREATE TABLE public.environment_dependencies_xref(
 CREATE TABLE public.version_logs(
 	id serial NOT NULL,
 	version integer NOT NULL,
-	dependency_data text[3] NOT NULL, --version, environment type, application name
+	dependency_data text[][3] NOT NULL, --version, environment type, application name
 	CONSTRAINT pk_version_log PRIMARY KEY (id)
 );
 
@@ -148,18 +148,39 @@ INSERT INTO environment_dependencies_xref (environment, dependency) VALUES(
 	(SELECT id FROM applications WHERE name = 'Cloud Control'),
 	(SELECT id FROM applications WHERE name = 'LBaaS'));
 
+INSERT INTO VERSIONS(environment, version) VALUES (1, '1.00');
+INSERT INTO VERSIONS(environment, version) VALUES (1, '1.01');
+INSERT INTO VERSIONS(environment, version) VALUES (1, '1.05');
+INSERT INTO VERSIONS(environment, version) VALUES (1, '1.05b');
+INSERT INTO VERSIONS(environment, version) VALUES (2, 'v2.5');
+INSERT INTO VERSIONS(environment, version) VALUES (2, 'v2.506');
+INSERT INTO VERSIONS(environment, version) VALUES (2, 'v2.57');
+INSERT INTO VERSIONS(environment, version) VALUES (2, 'v2.99');
+INSERT INTO VERSIONS(environment, version) VALUES (2, 'v2.99b-2');
+INSERT INTO VERSIONS(environment, version) VALUES (3, '2.2');
+INSERT INTO VERSIONS(environment, version) VALUES (3, '2.3');
+INSERT INTO VERSIONS(environment, version) VALUES (3, '2.4');
+INSERT INTO VERSIONS(environment, version) VALUES (3, '2.5');
+INSERT INTO VERSIONS(environment, version) VALUES (3, '2.6');
+INSERT INTO VERSIONS(environment, version) VALUES (3, '3.0');
+
+INSERT INTO version_logs (version, dependency_data) VALUES (1, '{{"v2.506", "Staging", "Nova"},{"v2.2", "Production", "LBaaS"}}');
+INSERT INTO version_logs (version, dependency_data) VALUES (2, '{{"v2.57", "Staging", "Nova"},{"v2.3", "Staging", "LBaaS"}}');
+INSERT INTO version_logs (version, dependency_data) VALUES (5, '{{"v2.5", "Production", "LBaaS"}}');
+
 -- Views
-CREATE OR REPLACE VIEW environment_dependencies AS 
-	SELECT
-		a.name 			as dependency_name,
-		et.label 		as environment_type,
-		e.id 			as environment_id,
-		ex.dependency 	as dependency_id
-	FROM
-		environments e
-	JOIN environment_dependencies_xref ex ON ex.environment = e.id
-	JOIN applications a ON a.id = ex.dependency
-	JOIN environment_types et ON et.id = e.environment_type;
+        SELECT
+                a2.name        as environment_name,
+                a1.name        as dependency_name,
+                et.label       as environment_type,
+                e.id           as environment_id,
+                ex.dependency  as dependency_id
+        FROM
+                environments e
+        JOIN environment_dependencies_xref ex ON ex.environment = e.id
+        JOIN applications a1 ON a1.id = ex.dependency
+        JOIN applications a2 ON a2.id = ex.environment
+        JOIN environment_types et ON et.id = e.environment_type;
 
 
 CREATE OR REPLACE VIEW environment_notifications AS

@@ -20,7 +20,7 @@ class ApplicationHandler(BaseHandler):
     @asynchronous
     @gen.engine
     def get(self):
-        response = yield gen.Task(Application.get_all_applications)
+        response = yield gen.Task(Application.get_application)
         self.finish(response)
 
 

@@ -149,17 +149,18 @@ INSERT INTO environment_dependencies_xref (environment, dependency) VALUES(
 	(SELECT id FROM applications WHERE name = 'LBaaS'));
 
 -- Views
-CREATE OR REPLACE VIEW environment_dependencies AS 
-	SELECT
-		a.name 			as dependency_name,
-		et.label 		as environment_type,
-		e.id 			as environment_id,
-		ex.dependency 	as dependency_id
-	FROM
-		environments e
-	JOIN environment_dependencies_xref ex ON ex.environment = e.id
-	JOIN applications a ON a.id = ex.dependency
-	JOIN environment_types et ON et.id = e.environment_type;
+        SELECT
+                a2.name        as environment_name,
+                a1.name        as dependency_name,
+                et.label       as environment_type,
+                e.id           as environment_id,
+                ex.dependency  as dependency_id
+        FROM
+                environments e
+        JOIN environment_dependencies_xref ex ON ex.environment = e.id
+        JOIN applications a1 ON a1.id = ex.dependency
+        JOIN applications a2 ON a2.id = ex.environment
+        JOIN environment_types et ON et.id = e.environment_type;
 
 
 CREATE OR REPLACE VIEW environment_notifications AS

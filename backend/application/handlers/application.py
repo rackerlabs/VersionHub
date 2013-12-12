@@ -100,7 +100,7 @@ class Application(object):
         return callback()
 
     @staticmethod
-    def get_application(app_id, callback):
+    def delete_application(app_id, callback):
         db = Db.connect()
         db.callproc('delete_application', app_id);
 

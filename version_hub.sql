@@ -362,6 +362,15 @@ RETURNS VOID AS
 	$$
 LANGUAGE plpgsql;
 
+CREATE OR REPLACE FUNCTION set_notification_read(notification_id int)
+RETURNS VOID AS
+	$$ 
+		BEGIN
+			UPDATE notifications SET read = TRUE WHERE id = notification_id;
+		END
+	$$
+LANGUAGE plpgsql;
+
 CREATE OR REPLACE FUNCTION get_environment_dependencies(int)
 RETURNS setof environment_dependencies AS
 	$$ 
@@ -372,7 +381,7 @@ LANGUAGE sql;
 CREATE OR REPLACE FUNCTION get_environment_noifications(int)
 RETURNS setof environment_notifications AS
 	$$ 
-		SELECT * FROM environment_notifications WHERE environment_id = $1;
+		SELECT * FROM environment_notifications WHERE environment_id = $1 AND read = FALSE;
 	$$
 LANGUAGE sql;
 

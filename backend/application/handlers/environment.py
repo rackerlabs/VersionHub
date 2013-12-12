@@ -10,7 +10,7 @@ class EnvironmentsHandler(BaseHandler):
 
     @asynchronous
     @gen.engine
-    def post(app_id, self):
+    def post(self, app_id):
         details = {
             "environment_type": self.params.get("environment_type", ""),
             "endpoint": self.params.get("endpoint", "")
@@ -23,13 +23,13 @@ class EnvironmentHandler(BaseHandler):
 
     @asynchronous
     @gen.engine
-    def put(app_id, env_id, endpoint, self):
+    def put(self, app_id, env_id, endpoint):
         response = yield gen.Task(Environment.update_environment, env_id, endpoint)
         self.finish(response)
 
     @asynchronous
     @gen.engine
-    def delete(app_id, env_id, self):
+    def delete(self, app_id, env_id):
         response = yield gen.Task(Environment.delete_environment, env_id)
         self.finish(response)
 
@@ -47,7 +47,7 @@ class Environment(object):
 
         return callback()
 
-    @staticmethod
+     @staticmethod
     def update_environment(env_id, endpoing, callback):
         db = Db.connect()
         db.callproc('update_environment', 

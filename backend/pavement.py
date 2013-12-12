@@ -30,6 +30,7 @@ install_requires = [
     'pytz',
     'pyyaml==3.10',
     'tornado==3.1',
+    'psycopg2'
 ]
 
 #

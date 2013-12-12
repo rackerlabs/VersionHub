@@ -1,0 +1,16 @@
+<div class="row">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Application</th>
+                <th>Notifications</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="application in applications">
+                <td><a href="#/applications/{{application.application_id}}">{{application.application_name}}</a></td>
+                <td><span ng-class="{ 'red-status': application.staging && application.production, 'yellow-status': application.staging && !application.production, 'green-status': !application.staging && !application.production }">&nbsp;</span></td>
+            </tr>
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,7 @@
+# Get applications
+-   request:
+        url: ^/api/applications$
+        method: GET
+    response:
+        status: 200
+        file: test/api-mocks/responses/fakeApplicationsResponse.json

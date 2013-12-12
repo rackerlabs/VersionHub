@@ -1,5 +1,3 @@
-VersionHub
-
 # Overview
 **VersionHub**'s aim is to provide a centralized location for Rackspace to log its Production level applications, their version histories as well as the dependencies of the applications on one another.
 

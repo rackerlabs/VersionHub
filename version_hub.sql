@@ -169,12 +169,13 @@ INSERT INTO version_logs (version, dependency_data) VALUES (2, '{{"v2.57", "Stag
 INSERT INTO version_logs (version, dependency_data) VALUES (5, '{{"v2.5", "Production", "LBaaS"}}');
 
 -- Views
+CREATE OR REPLACE VIEW environment_dependencies AS
         SELECT
-                a2.name        as environment_name,
+                a2.name        as application_name,
+		e.id           as application_id,
                 a1.name        as dependency_name,
-                et.label       as environment_type,
-                e.id           as environment_id,
-                ex.dependency  as dependency_id
+                ex.dependency  as dependency_id,
+                et.label       as environment_type
         FROM
                 environments e
         JOIN environment_dependencies_xref ex ON ex.environment = e.id
@@ -388,7 +389,7 @@ LANGUAGE plpgsql;
 CREATE OR REPLACE FUNCTION get_environment_dependencies(int)
 RETURNS setof environment_dependencies AS
 	$$ 
-		SELECT * FROM environment_dependencies WHERE environment_id = $1;
+		SELECT * FROM environment_dependencies WHERE application_id = $1;
 	$$
 LANGUAGE sql;
 

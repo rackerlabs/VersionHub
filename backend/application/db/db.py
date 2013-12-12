@@ -11,6 +11,12 @@ class Db:
     }
 
     @staticmethod
+    def close():
+        if Db.__conn is not None:
+            Db.__conn.close()
+            Db.__conn = None
+
+    @staticmethod
     def connect():
         if Db.__conn is None:
             Db.__conn = psycopg2.connect(**Db.__settings)

@@ -5,26 +5,27 @@ from application.db.db import Db
 from application.util import route
 from application.handlers.base import BaseHandler
 
-@route(r'/applications/{app_id}/enviornments/{env_id}/dependencies')
+@route(r'/applications/{app_id}/environments/{env_id}/dependencies')
 class DependenciesHandler(BaseHandler):
 
     @asynchronous
     @gen.engine
-    def get(app_id, env_id, self):
+    def get(self, app_id, env_id):
         response = yield gen.Task(Dependency.get_dependencies, env_id)
+        print(response);
         self.finish(response)
 
     @asynchronous
     @gen.engine
-    def post(app_id, env_id, self):
+    def post(self, app_id, env_id):
         dependency = self.params.get("dependency", "")
 
         response = yield gen.Task(Dependency.create_dependency, env_id, dependency)
         self.finish(response)
 
-        @asynchronous
+    @asynchronous
     @gen.engine
-    def delete(app_id, env_id, self):
+    def delete(self, app_id, env_id):
         dependency = self.params.get("dependency", "")
 
         response = yield gen.Task(Dependency.delete_dependency, env_id, dependency)

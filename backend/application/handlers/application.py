@@ -31,13 +31,13 @@ class ApplicationHandler(BaseHandler):
 
     @asynchronous
     @gen.engine
-    def get(app_id, self):
+    def get(self, app_id):
         response = yield gen.Task(Application.get_application, app_id)
         self.finish(response)
 
     @asynchronous
     @gen.engine
-    def put(app_id, self):
+    def put(self, app_id):
         details = {
             "name": self.params.get("name", ""),
             "description": self.params.get("description", ""),
@@ -49,7 +49,7 @@ class ApplicationHandler(BaseHandler):
 
     @asynchronous
     @gen.engine
-    def delete(app_id, self):
+    def delete(self, app_id):
         response = yield gen.Task(Application.delete_application, app_id)
         self.finish(response)
 
@@ -86,7 +86,7 @@ class Application(object):
         r = db.fetchall()
         return callback({'application': r})
 
-     @staticmethod
+    @staticmethod
     def update_application(app_id, details, callback):
         db = Db.connect()
         db.callproc('update_application', 

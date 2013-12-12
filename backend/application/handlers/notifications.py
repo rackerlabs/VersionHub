@@ -10,7 +10,7 @@ class NotificationsHandler(BaseHandler):
 
     @asynchronous
     @gen.engine
-    def get(app_id, env_id, self):
+    def get(self, app_id, env_id):
         response = yield gen.Task(Notification.get_notifications, env_id)
         self.finish(response)
 
@@ -20,7 +20,7 @@ class NotificationHandler(BaseHandler):
     
     @asynchronous
     @gen.engine
-    def put(app_id, env_id, notification_id, self):
+    def put(self, app_id, env_id, notification_id):
         response = yield gen.Task(Notification.set_notification_read, notification_id)
         self.finish(response)
 

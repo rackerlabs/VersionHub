@@ -7,7 +7,8 @@ The idea came about from Rackerlabs hack week '13 and inspired by Jim Meow-yer a
 
 ## Contributors
 * Roger Enriquez (UI - Entrepreneur, API - Backend ninja)
-* Kacie Hauser (DB - Postgres Pro, API - Tornado master)
+* Kacie Houser (DB - Postgres Pro, API - Tornado master)
+* Hussam Dawood (DB - Last Database Bender, API - The Mariah Carey of Backend Engineering)
 
 ## Technologies
 * **Python 3.3** API server running on Tornado and nginx

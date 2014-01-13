@@ -1,7 +1,7 @@
 # Overview
 **VersionHub**'s aim is to provide a centralized location for Rackspace to log its Production level applications, their version histories as well as the dependencies of the applications on one another.
 
-The idea came about from Rackerlabs hack week '13 and inspired by Jim Meow-yer and Duncan McCreggorrrr...
+The idea came about from Rackerlabs hack week '13 and inspired by Tim Ray and David Kowis...
 
     https://github.rackspace.com/rackertools/dev/wiki/Racker-Tools-Hack-Week:-Dec-2013
 

@@ -33,11 +33,28 @@ The idea came about from Rackerlabs hack week '13 and inspired by Tim Ray and Da
 
     pip install -r requirements.txt
 
-    cd /root/VersionHub/backend
-    /usr/local/share/python3/paver create_virtualenv
+#### Setup the backend
+
+    cd backend
+    ---If you have only python 3:
+        paver create_virtualenv
+    ---If you have both python 2 and 3:
+        /usr/local/share/python3/paver create_virtualenv
+    cp ops/config.yaml.default ops/config.yaml
+    cd ..
+
+Optionally, you can specify the location of the generated virtualenv
+
+    /usr/local/share/python3/paver dest_dir="/srv/virtualenv" create_virtualenv
+
+#### Configure the config.yaml file
+
+TBD
+
+### Running the application
 
     source bin/activate
     pip install -r requirements.txt
 
-    version_hub
+    version_hub -d ops/config.yaml
 

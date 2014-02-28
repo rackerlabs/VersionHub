@@ -47,7 +47,7 @@ class Environment(object):
 
         return callback()
 
-     @staticmethod
+    @staticmethod
     def update_environment(env_id, endpoing, callback):
         db = Db.connect()
         db.callproc('update_environment', 

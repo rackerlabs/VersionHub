@@ -15,7 +15,7 @@ import tornado.web
 from tornado.ioloop import IOLoop
 from tornado.web import RequestHandler
 
-#from application.config import config
+from application.config import config
 #from application.lib.mock import set_mock_data
 
 log = logging.getLogger(__name__)
@@ -53,6 +53,43 @@ def autoload(dirname):
             # not the case for tests. It shouldn't hurt to reload them anyways.
             # if package_name not in sys.modules or True:
             importer.find_module(package_name).load_module(package_name)
+
+def command_line_options():
+    """ command line configuration """
+
+    parser = OptionParser(usage="usage: %prog [options] <config_file>")
+
+    parser.add_option('-d', '--debug',
+                      action="store_true",
+                      dest="debug",
+                      default=False,
+                      help="Start the application in debugging mode.")
+
+    parser.add_option('-p', '--port',
+                      action="store",
+                      dest="port",
+                      default=3000,
+                      help="Set the port to listen to on startup.")
+
+    parser.add_option('-a', '--address',
+                      action="store",
+                      dest="address",
+                      default=None,
+                      help="Set the address to listen to on startup. Can be a "
+                      "hostname or an IPv4/v6 address.")
+
+    parser.add_option('-m', '--mock',
+                      action="store_true",
+                      dest="mock",
+                      default=False,
+                      help="Only use Mock (fake) data")
+
+    options, args = parser.parse_args()
+
+    if len(args) >= 1:
+        config.load_file(args[0])
+
+    return options
 
 
 def setup_logging():
@@ -92,6 +129,7 @@ def get_routes(root, handler_path):
 
 class IndexFileHandler(RequestHandler):
     def get(self):
+        log.error(config)
         self.render(config["landing_page"])
 
 def main(handler_path):
@@ -99,15 +137,18 @@ def main(handler_path):
 
     root = os.path.dirname(__file__)
 
-    # get the command line options
+    options = command_line_options()
     setup_logging()
 
     # setup the application
     log.info("Setting up the application")
-    application = tornado.web.Application(get_routes(root, handler_path))
+    application = tornado.web.Application(
+        get_routes(root, handler_path),
+        debug=options.debug
+    )
 
     # start the ioloop
     log.info("Starting the application on port 8000")
-    application.listen(8000, '0.0.0.0')
+    application.listen(options.port, '0.0.0.0')
     IOLoop.instance().start()
 

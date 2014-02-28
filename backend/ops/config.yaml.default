@@ -1,0 +1,4 @@
+environment: staging
+api_version: 0.1
+
+landing_page: "../../frontend/app/index.html"

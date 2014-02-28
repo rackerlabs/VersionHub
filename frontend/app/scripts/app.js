@@ -1,7 +1,7 @@
 (function() {
     'use strict';
 
-    angular.module('version_hub', ['ngRoute', 'ngResource', 'ui.bootstrap'])
+    angular.module('version_hub', ['ngRoute', 'ngResource', 'encore.ui', 'applications'])
         .constant('ROUTE_PATHS', {
             'homepage': '/',
             'applications': '/applications',

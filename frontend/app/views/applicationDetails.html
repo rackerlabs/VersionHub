@@ -1,71 +1,90 @@
-<div>
-    <h2>{{application.name}}
-        <span ng-class="{ 'red-status': application.staging && application.production, 'yellow-status': application.staging && !application.production, 'green-status': !application.staging && !application.production }">&nbsp;</span>
-    </h3>
+<div class="page-content">
+    <rx-related-menu state="menuShown" collapsable="false" position="left">
+        <h5><a class="navbar-brand" href="/">VersionHub</a></h5>
+
+        <div class="collapse navbar-collapse">
+            <ul class="product-resources">
+                <li class="active"><a href="#">Applications</a></li>
+            </ul>
+        </div>
+    </rx-related-menu>
+    <div class="main-content">
+        <div>
+            <h1>{{application.name}}
+                <span ng-class="{ 'red-status': application.staging && application.production, 'yellow-status': application.staging && !application.production, 'green-status': !application.staging && !application.production }">&nbsp;</span>
+            </h1>
+        </div>
+        <table class="table table-striped">
+            <tr><td>Description: </td><td>{{application.description}}</td></tr>
+            <tr><td>GitHub Repo:</td><td>{{application.github}}</td></tr>
+            <tr><td>Point of Contact: </td><td>{{application.contact_email}}</td></tr>
+        </table>
+
+        <hr/>
+
+        <select ng-model="environment" ng-options="e.name for e in environments"></select>
+         
+        <br/><br/>
+        <!-- <tabset>
+            <tab heading="{{tabs[0].title}}"> -->
+                <h2>Notifications</h2>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Message</th>
+                            <th>Date Created</th>
+                            <th>Acknowledge</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="notification in notifications | filter: { environment_type: environment.name } | orderBy: created_on:reverse">
+                            <td>{{notification.notification_message}}</td>
+                            <td>{{notification.created_on | date: 'yyyy-MM-dd HH:mm:ss'}}</td>
+                            <td><span class="glyphicon glyphicon-ok"</span></td>
+                        </tr>
+                    </tbody>
+                </table><!-- 
+            </tab>
+            <tab heading="{{tabs[1].title}}"> -->
+                <h2>Dependencies</h2>
+                <rx-application-actions
+                    class="pull-right"
+                    actions="actions.addDependency"
+                    status="page.status"
+                ></rx-application-actions>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Application</th>
+                            <th>Environment</th>
+                            <th>Remove</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="dependency in dependencies | filter: { environment_type: environment.name }">
+                            <td>{{dependency.dependency_name}}</td>
+                            <td>{{dependency.environment_type}}</td>
+                            <td><span class="glyphicon glyphicon-remove"</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+        <!--     </tab>
+            <tab heading="{{tabs[2].title}}"> -->
+                <h2>Version Log</h2>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Version</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="version in versions | filter: { environment_type: environment.name }">
+                            <td><a href="">{{version.application_name}} {{version.version_text}}</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+           <!--  </tab>
+        </tabset> -->
+    </div>
 </div>
-<table class="table table-striped">
-    <tr><td>Description: </td><td>{{application.description}}</td></tr>
-    <tr><td>GitHub Repo:</td><td>{{application.github}}</td></tr>
-    <tr><td>Point of Contact: </td><td>{{application.contact_email}}</td></tr>
-</table>
-
-<hr/>
-
-<select ng-model="environment" ng-options="e.name for e in environments"></select>
- 
-<br/><br/>
-<tabset>
-    <tab heading="{{tabs[0].title}}">
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                    <th>Message</th>
-                    <th>Date Created</th>
-                    <th>Acknowledge</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat="notification in notifications | filter: { environment_type: environment.name } | orderBy: created_on:reverse">
-                    <td>{{notification.notification_message}}</td>
-                    <td>{{notification.created_on | date: 'yyyy-MM-dd HH:mm:ss'}}</td>
-                    <td><span class="glyphicon glyphicon-ok"</span></td>
-                </tr>
-            </tbody>
-        </table>
-    </tab>
-    <tab heading="{{tabs[1].title}}">
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                    <th>Application</th>
-                    <th>Environment</th>
-                    <th>Remove</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat="dependency in dependencies | filter: { environment_type: environment.name }">
-                    <td>{{dependency.dependency_name}}</td>
-                    <td>{{dependency.environment_type}}</td>
-                    <td><span class="glyphicon glyphicon-remove"</span></td>
-                </tr>
-            </tbody>
-        </table>
-        Add Dependency <select><option>DBaaS</option><option>DBaaGs</option></select>
-                       <select ng-model="addDependency" ng-options="e.name for e in environments"></select>
-                       <span class="glyphicon glyphicon-plus"</span>
-    </tab>
-    <tab heading="{{tabs[2].title}}">
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                    <th>Version</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat="version in versions | filter: { environment_type: environment.name }">
-                    <td><a href="">{{version.application_name}} {{version.version_text}}</a></td>
-                </tr>
-            </tbody>
-        </table>
-    </tab>
-</tabset>

@@ -1,0 +1,16 @@
+<rx-modal-form title="Add Dependancy" submit-text="Add Dependancy" cancel-text="Cancel">
+    <rx-form-select
+        options="applications"
+        model="fields.application"
+        field-id="dependancyApplication"
+        label="Application"
+        required="true"
+        ></rx-form-select>
+    <rx-form-select
+        options="environments"
+        model="fields.environment"
+        field-id="dependancyEnviornment"
+        label="Enviornment"
+        required="true"
+        ></rx-form-select>
+</rx-modal-form>

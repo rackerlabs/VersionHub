@@ -1,16 +1,29 @@
-<div class="row">
-    <table class="table table-hover">
-        <thead>
-            <tr>
-                <th>Application</th>
-                <th>Notifications</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr ng-repeat="application in applications">
-                <td><a href="#/applications/{{application.application_id}}">{{application.application_name}}</a></td>
-                <td><span ng-class="{ 'red-status': application.staging && application.production, 'yellow-status': application.staging && !application.production, 'green-status': !application.staging && !application.production }">&nbsp;</span></td>
-            </tr>
-        </tbody>
-    </table>
+<div class="page-content">
+    <rx-related-menu state="menuShown" collapsable="false" position="left">
+        <h5><a class="navbar-brand" href="/">VersionHub</a></h5>
+
+        <div class="collapse navbar-collapse">
+            <ul class="product-resources">
+                <li class="active"><a href="#">Applications</a></li>
+            </ul>
+        </div>
+    </rx-related-menu>
+    <div class="main-content">
+        <div class="row">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Application</th>
+                        <th>Notifications</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="application in applications">
+                        <td><a href="#/applications/{{application.application_id}}">{{application.application_name}}</a></td>
+                        <td><span ng-class="{ 'red-status': application.staging && application.production, 'yellow-status': application.staging && !application.production, 'green-status': !application.staging && !application.production }">&nbsp;</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>

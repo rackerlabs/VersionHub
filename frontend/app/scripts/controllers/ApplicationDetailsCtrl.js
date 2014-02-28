@@ -1,7 +1,7 @@
 (function() {
     'use strict';
 
-    angular.module('version_hub')
+    angular.module('applications', [])
         .controller('ApplicationDetailsCtrl', function($scope, $routeParams, Applications,
             Dependencies, Versions, Notifications) {
 
@@ -9,6 +9,17 @@
                 {name: 'Staging', value: 'staging' },
                 {name: 'Production', value: 'production' }
             ];
+
+            $scope.applications = [
+                {name: 'Dbaas', value: 'staging' },
+                {name: 'Dbaas', value: 'production' },
+                {name: 'Lbaas', value: 'staging' },
+                {name: 'Lbaas', value: 'production' }
+            ];
+
+            $scope.actions = {
+                'addDependency': ['addDependency'],
+            };
 
             $scope.environment = $scope.environments[0];
             $scope.addDependency = $scope.environments[0];

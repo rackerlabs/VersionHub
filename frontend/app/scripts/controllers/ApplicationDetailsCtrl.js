@@ -2,15 +2,16 @@
     'use strict';
 
     angular.module('version_hub')
-        .controller('ApplicationDetailsCtrl', function($scope, $routeParams, Applications, Dependencies, Versions, Notifications) {
+        .controller('ApplicationDetailsCtrl', function($scope, $routeParams, Applications,
+            Dependencies, Versions, Notifications) {
 
             $scope.environments = [
-                {name: "Staging", value: "staging" },
-                {name: "Production", value: "production" }
+                {name: 'Staging', value: 'staging' },
+                {name: 'Production', value: 'production' }
             ];
 
             $scope.environment = $scope.environments[0];
-            $scope.add_dependency = $scope.environments[0];
+            $scope.addDependency = $scope.environments[0];
 
             $scope.tabs = [
                 { title: 'Notifications', content: '<rx-notifications></rx-notifications>'},

@@ -5,7 +5,7 @@
     "angular": "~1.2.4",
     "angular-route": "~1.2.4",
     "angular-resource": "~1.2.4",
-    "angular-bootstrap": "~"
+    "angular-bootstrap": "~0.10.0",
     "lodash": "~0.7.0",
     "bootstrap": "~3.0.3"
   },
